@@ -1,0 +1,16 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+  username: todo
+  password:
+
+development:
+  <<: *default
+  database: todo_development
+
+production:
+  adapter: postgresql
+  url: <%= ENV['DATABASE_URL'] %>
+  encoding: unicode
+  pool: 5
