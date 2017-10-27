@@ -12,11 +12,9 @@ module Api::V1
     end
 
     def show
-      if current_user
-        @user = User.find_by_id(current_user.id)
+      @user = User.find(current_user.id)
+      if @user
         render status: 200, json: @user
-      else
-        render status: 401, json: { success: false}
       end
     end
 

@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
   scope module: 'api' do
     namespace :v1 do
-      resources :items
+      resources :items, except: :index
+      resources :lists
 
       # Create new user
       post 'user' => 'user#create'
@@ -10,7 +11,7 @@ Rails.application.routes.draw do
       get 'user' => 'user#show'
 
       # Login, return new JWT token
-      post 'user_token' => 'user_token#create'
+      post 'auth' => 'user_token#create'
     end
    end
 end

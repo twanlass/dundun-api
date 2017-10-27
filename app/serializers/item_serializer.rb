@@ -1,8 +1,5 @@
 class ItemSerializer < ActiveModel::Serializer
-  attributes :title
-  attributes :completed
-  attributes :completed_at
-  attributes :due_at
-  attributes :is_event
-  attributes :created_at
+  attributes :title, :completed, :completed_at, :due_at, :is_event, :created_at
+
+  belongs_to :list
 end
