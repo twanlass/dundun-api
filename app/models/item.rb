@@ -1,10 +1,14 @@
 class Item < ActiveRecord::Base
+  include RankedModel
+  ranks :idx, :with_same => :list_id
+
   validates :title, presence: true
   validates :list_id, presence: true
-  validates :completed, inclusion: [true, false]
-  validates :is_event, inclusion: [true, false]
-
-  # todo: Validate completed at is a date
+  before_save :default_due_at
 
   belongs_to :list
+
+  def default_due_at
+    self.due_at ||= Time.now.to_i
+  end
 end
