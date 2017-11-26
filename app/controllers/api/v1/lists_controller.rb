@@ -12,7 +12,7 @@ module Api::V1
 
     def show
       sort_order = current_user.lists.find(params[:id]).items.rank(:idx).ids
-      render json: current_user.lists.find(params[:id]), include: ['items'], meta: {sort_order: sort_order}
+      render json: current_user.lists.find(params[:id]), include: ['items'], meta: {sort_order: sort_order, num_items: sort_order.count}
     end
 
     def update

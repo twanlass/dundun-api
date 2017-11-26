@@ -7,7 +7,7 @@ module Api::V1
       item = current_user.lists.find(params[:list_id]).items.create!(item_params)
       render json: item,
       include: [],
-      meta: {list_id: item.list_id, temp_id: params[:temp_id]}
+      meta: {list_id: item.list_id}
     end
 
     def show
