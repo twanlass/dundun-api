@@ -4,11 +4,16 @@ class Item < ActiveRecord::Base
 
   validates :title, presence: true
   validates :list_id, presence: true
-  before_save :default_due_at
+  before_save :set_due_at
+  before_save :set_completed_at
 
   belongs_to :list
 
-  def default_due_at
-    self.due_at ||= Time.now.to_i
+  def set_due_at
+    self.due_at ||= DateTime.now
+  end
+
+  def set_completed_at
+    self.completed_at = self.completed ? DateTime.now : nil
   end
 end

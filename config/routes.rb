@@ -1,8 +1,11 @@
 Rails.application.routes.draw do
   scope module: 'api' do
     namespace :v1 do
-      resources :items, except: :index
-      resources :lists
+      # Return core lists
+      get 'lists/today', to: 'lists#named_list', defaults: { id: 'today' }
+      get 'lists/upcoming', to: 'lists#named_list', defaults: { id: 'upcoming' }
+      get 'lists/someday', to: 'lists#named_list', defaults: { id: 'someday' }
+      get 'lists/done', to: 'lists#named_list', defaults: { id: 'done' }
 
       # Create new user
       post 'user' => 'user#create'
@@ -12,6 +15,9 @@ Rails.application.routes.draw do
 
       # Login, return new JWT token
       post 'auth' => 'user_token#create'
+
+      resources :lists
+      resources :items, except: :index
     end
    end
 end
