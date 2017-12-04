@@ -37,20 +37,21 @@ module Api::V1
     end
 
     def show_list(list)
+      # Given a user's timezone, move any items completed yesterday to the Done list
+      done_list = current_user.lists.find_by(title: 'done')
+      List.move_items_to_done(list.id, done_list.id, current_user.timezone)
+
+      # Move any upcoming items that are now due to the Today list
+      today_list = current_user.lists.find_by(title: 'today')
+      upcoming_list = current_user.lists.find_by(title: 'upcoming')
+      List.move_items_to_today(today_list.id, upcoming_list.id)
+
+      # Fetch list items after any move actions above
       items = list.items
 
       # Meta data for list
       sort_order = items.rank(:idx).ids
       badge_count = items.where(completed: false).count
-
-      # Move any 1 day or older completed items to the done list
-      done_list = current_user.lists.find_by(title: 'done')
-      List.move_items_to_done(list.id, done_list.id)
-
-      # Move any upcoming items to Today that are now due
-      today_list = current_user.lists.find_by(title: 'today')
-      upcoming_list = current_user.lists.find_by(title: 'upcoming')
-      List.move_items_to_today(today_list.id, upcoming_list.id)
 
       render json: list,
       include: ['items'],
