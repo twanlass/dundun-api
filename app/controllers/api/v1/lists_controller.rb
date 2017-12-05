@@ -39,7 +39,7 @@ module Api::V1
     def show_list(list)
       # Given a user's timezone, move any items completed yesterday to the Done list
       done_list = current_user.lists.find_by(title: 'done')
-      List.move_items_to_done(list.id, done_list.id, current_user.timezone)
+      List.move_items_to_done(done_list.id, current_user.timezone)
 
       # Move any upcoming items that are now due to the Today list
       today_list = current_user.lists.find_by(title: 'today')
