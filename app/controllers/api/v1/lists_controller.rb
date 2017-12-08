@@ -44,7 +44,7 @@ module Api::V1
       # Move any upcoming items that are now due to the Today list
       today_list = current_user.lists.find_by(title: 'today')
       upcoming_list = current_user.lists.find_by(title: 'upcoming')
-      List.move_items_to_today(today_list.id, upcoming_list.id)
+      List.move_items_to_today(today_list.id, upcoming_list.id, current_user.timezone)
 
       # Fetch list items after any move actions above
       items = list.items
