@@ -28,4 +28,14 @@ class List < ActiveRecord::Base
       due_items.update_all(list_id: today_list_id)
     end
   end
+
+  # Create the default lists for new users
+  def self.create_default_lists
+    self.create([
+      {title: 'today', type: 'core'},
+      {title: 'upcoming', type: 'core'},
+      {title: 'someday', type: 'core'},
+      {title: 'done', type: 'core'}
+    ])
+  end
 end
