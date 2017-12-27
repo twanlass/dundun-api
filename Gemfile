@@ -1,5 +1,5 @@
 ruby "2.2.2"
-# source 'https://rubygems.org'
+source 'https://rubygems.org'
 
 gem 'rails', '~> 5.1.4'
 gem 'pg'
