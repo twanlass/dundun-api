@@ -7,16 +7,11 @@ Rails.application.routes.draw do
       get 'lists/someday', to: 'lists#named_list', defaults: { id: 'someday' }
       get 'lists/done', to: 'lists#named_list', defaults: { id: 'done' }
 
-      # Create new user
-      post 'user' => 'user#create'
-
-      # Return current user info
-      get 'user' => 'user#show'
-
       # Login, return new JWT token
       post 'auth' => 'user_token#create'
 
       resources :lists
+      resource :user, except: [:index, :destroy]
       resources :items, except: :index
     end
    end
