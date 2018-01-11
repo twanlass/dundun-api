@@ -12,7 +12,7 @@ class List < ActiveRecord::Base
     Time.use_zone(timezone) do
       logger.info '--------------------------------'
       logger.info "Move items to done with timezone: #{timezone}"
-      logger.info "Time.at(0).to_datetime: #{Time.at(0).to_datetime}"
+      logger.info "Time.at(0).to_datetime: #{Time.zone.yesterday.end_of_day}"
       logger.info '--------------------------------'
       done_items = Item.where.not(list_id: done_list_id).where({
         completed: true,
@@ -27,7 +27,7 @@ class List < ActiveRecord::Base
     Time.use_zone(timezone) do
       logger.info '--------------------------------'
       logger.info "Move items to today with timezone: #{timezone}"
-      logger.info "beginning_of_day: #{Date.today.beginning_of_day}"
+      logger.info "beginning_of_day: #{Time.zone.now.beginning_of_day}"
       logger.info '--------------------------------'
       due_items = Item.where({
         list_id: upcoming_list_id,
