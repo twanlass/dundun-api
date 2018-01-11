@@ -7,7 +7,7 @@ module Api::V1
       core_lists = lists.where(type: 'core').order(:created_at).ids
       custom_lists = lists.where(type: 'custom').order(:created_at).ids
       sort_order = core_lists + custom_lists
-      render json: {lists: lists.map { |i| [i.id, i] }.to_h, meta: {timezone: current_user.timezone, sort_order: sort_order, num_lists: sort_order.count}}
+      render json: {lists: lists.map { |i| [i.id, i] }.to_h, meta: {sort_order: sort_order, num_lists: sort_order.count}}
     end
 
     def create
