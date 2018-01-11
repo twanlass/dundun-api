@@ -16,7 +16,7 @@ class List < ActiveRecord::Base
       logger.info '--------------------------------'
       done_items = Item.where.not(list_id: done_list_id).where({
         completed: true,
-        completed_at: (Time.at(0).to_datetime..Date.yesterday.end_of_day)
+        completed_at: (Time.at(0).to_datetime..Time.zone.yesterday.end_of_day)
       })
       done_items.update_all(list_id: done_list_id)
     end
@@ -31,7 +31,7 @@ class List < ActiveRecord::Base
       logger.info '--------------------------------'
       due_items = Item.where({
         list_id: upcoming_list_id,
-        due_at: Date.today.beginning_of_day..Date.today.end_of_day
+        due_at: Time.zone.now.beginning_of_day..Time.zone.now.end_of_day
       })
       due_items.update_all(list_id: today_list_id)
     end
