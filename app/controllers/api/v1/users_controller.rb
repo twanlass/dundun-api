@@ -20,7 +20,7 @@ module Api::V1
 
     private
     def user_create_params
-      params.permit(:email, :password, :timezone)
+      params.require(:user).permit(:email, :password, :timezone)
     end
 
     def user_update_params

@@ -8,9 +8,9 @@ class List < ActiveRecord::Base
   has_many :items, dependent: :destroy
 
   # Given a user's timezone, move any items recently completed to the Done list
-  def self.move_items_to_done(done_list_id, timezone)
-    Time.use_zone(timezone) do
-      done_items = Item.where.not(list_id: done_list_id).where({
+  def self.move_items_to_done(done_list_id, current_user)
+    Time.use_zone(current_user.timezone) do
+      done_items = current_user.items.where.not(list_id: done_list_id).where({
         completed: true,
         completed_at: (Time.at(0).to_datetime..Time.zone.yesterday.end_of_day)
       })
@@ -19,9 +19,9 @@ class List < ActiveRecord::Base
   end
 
   # Given a user's timezone, move any upcoming items that are now due to the Today list
-  def self.move_items_to_today(today_list_id, upcoming_list_id, timezone)
-    Time.use_zone(timezone) do
-      due_items = Item.where({
+  def self.move_items_to_today(today_list_id, upcoming_list_id, current_user)
+    Time.use_zone(current_user.timezone) do
+      due_items = current_user.items.where({
         list_id: upcoming_list_id,
         due_at: Time.zone.now.beginning_of_day..Time.zone.now.end_of_day
       })
