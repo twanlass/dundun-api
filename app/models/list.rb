@@ -12,7 +12,7 @@ class List < ActiveRecord::Base
     Time.use_zone(current_user.timezone) do
       done_items = current_user.items.where.not(list_id: done_list_id).where({
         completed: true,
-        completed_at: (Time.at(0).to_datetime..Time.zone.yesterday.end_of_day)
+        completed_at: Time.at(0).to_datetime..Time.zone.yesterday.end_of_day
       })
       done_items.update_all(list_id: done_list_id)
     end
@@ -23,7 +23,7 @@ class List < ActiveRecord::Base
     Time.use_zone(current_user.timezone) do
       due_items = current_user.items.where({
         list_id: upcoming_list_id,
-        due_at: Time.zone.now.beginning_of_day..Time.zone.now.end_of_day
+        due_at: Time.at(0).to_datetime..Time.zone.now.end_of_day
       })
       due_items.update_all(list_id: today_list_id)
     end
